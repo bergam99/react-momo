@@ -1,8 +1,8 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
-import GameBoard from "./pages/GameBoard";
 import { ContextProvider } from "./store/Context";
+import GameBoard from "./pages/GameBoard/GameBoard";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
