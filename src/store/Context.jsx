@@ -4,8 +4,16 @@ const Context = createContext();
 
 export function ContextProvider({ children }) {
   const [enteredPlayerName, setEnteredPlayerName] = useState("");
-
-  const value = { enteredPlayerName, setEnteredPlayerName };
+  const [pressedKeys, setPressedKeys] = useState([]);
+  // const [gameBoard, setGameBoard] = useState([InitialGameBoard]);
+  const value = {
+    enteredPlayerName,
+    setEnteredPlayerName,
+    pressedKeys,
+    setPressedKeys,
+    // gameBoard,
+    // setGameBoard,
+  };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
