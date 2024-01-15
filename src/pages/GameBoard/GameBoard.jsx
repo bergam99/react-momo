@@ -1,11 +1,9 @@
-import { useContext, useRef } from "react";
-import Context from "../../store/Context";
-import Question from "./../../assets/icon/question.png";
+import { useRef } from "react";
 import "./GameBoard.css";
-import Modal from "../../components/Modal";
+import Modal from "./../../components/Modal/Modal";
+import GameBoardHeader from "../../components/GameBoardHeader/GameBoardHeader";
 
 const GameBoard = () => {
-  const { enteredPlayerName } = useContext(Context);
   const dialog = useRef();
 
   function handleModalOpen() {
@@ -16,14 +14,8 @@ const GameBoard = () => {
     <>
       <Modal ref={dialog} />
       <div className="GameBoard">
-        <header className="GameBoard__Header">
-          <p>Prêt.e {enteredPlayerName || "anonymus player"} ?</p>
-          <h2>MOMOMOTUS</h2>
-          <button onClick={handleModalOpen}>
-            <img className="GameBoard__question" src={Question} alt="aide" />
-          </button>
-        </header>
-        {/* main */}
+        <GameBoardHeader openModal={handleModalOpen} />
+
         <main className="GameBoard__Main"></main>
       </div>
     </>

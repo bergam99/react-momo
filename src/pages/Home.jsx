@@ -15,6 +15,7 @@ function Home() {
       <h1>MOMOMOTUS</h1>
       <br />
       <h1>🟥 🟡 🟦</h1>
+
       <p>Pour commencer, quel est ton prénom?</p>
       <input type="text" ref={playerName} required />
       <Link to="/gameboard">
@@ -22,7 +23,6 @@ function Home() {
           Let&apos;s go!
         </button>
       </Link>
-      {}
     </>
   );
 }

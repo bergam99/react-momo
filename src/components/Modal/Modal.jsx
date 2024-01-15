@@ -14,10 +14,10 @@ const Modal = forwardRef(function Modal({}, ref) {
 
   return createPortal(
     <dialog ref={dialog}>
-      <p>modal</p>
       <form method="dialog">
         <button>X</button>
       </form>
+      <p>modal</p>
     </dialog>,
     document.getElementById("modal")
   );
