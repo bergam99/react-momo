@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import Question from "./../../assets/icon/question.png";
 import Context from "../../store/Context";
 import "./GameBoardHeader.css";
+
 const GameBoardHeader = ({ openModal }) => {
   const { enteredPlayerName } = useContext(Context);
 

@@ -2,6 +2,8 @@ import { createContext, useState } from "react";
 
 const Context = createContext();
 
+export const response = ["P", "R", "E", "M", "I", "C", "E", "S"];
+
 export const InitialGameBoard = [
   [null, null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null, null],

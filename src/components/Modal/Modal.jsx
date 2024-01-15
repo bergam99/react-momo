@@ -1,7 +1,9 @@
-import { forwardRef, useImperativeHandle, useRef } from "react";
+import { forwardRef, useContext, useImperativeHandle, useRef } from "react";
 import { createPortal } from "react-dom";
-
-const Modal = forwardRef(function Modal({}, ref) {
+import Context from "../../store/Context";
+import Img from "../../assets/img/aide.png";
+const Modal = forwardRef(function Modal({ ok }, ref) {
+  const { enteredPlayerName, setEnteredPlayerName } = useContext(Context);
   const dialog = useRef();
 
   useImperativeHandle(ref, () => {
@@ -17,7 +19,39 @@ const Modal = forwardRef(function Modal({}, ref) {
       <form method="dialog">
         <button>X</button>
       </form>
-      <p>modal</p>
+      {ok === "default" && (
+        <div>
+          <h2>RÈGLES</h2>
+          <p>
+            Vous avez six essais pour deviner le mot du jour, entre 6 et 9
+            lettres, commun à tous. Vous ne pouvez proposer que des mots
+            commençant par la même lettre que le mot recherché, et qui se
+            trouvent dans notre dictionnaire. Les noms propres ne sont pas
+            acceptés.
+          </p>
+          <img src={Img} alt="ex" />
+          <br />
+          <p>
+            🟥 Les lettres entourées d'un carré rouge sont bien placées <br />
+            🟡 Les lettres entourées d'un cercle jaune sont mal placées (mais
+            présentes dans le mot). <br />
+            🟦 Les lettres qui restent sur fond bleu ne sont pas dans le mot.
+          </p>
+        </div>
+      )}
+      {ok === "ok" && (
+        <div>
+          <h2>FÉLICITATIONS {enteredPlayerName} !</h2> <br />
+          <p>Le mot était bien PREMICES. Tu l'as découvert en {} coups!</p>
+        </div>
+      )}
+      {ok === "notOk" && (
+        <div>
+          <h2>OH NON {enteredPlayerName} ... </h2>
+          <p>Ici, tout le monde a une seconde chance!</p>
+          <button>Réssayer!</button>
+        </div>
+      )}
     </dialog>,
     document.getElementById("modal")
   );

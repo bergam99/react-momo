@@ -1,16 +1,32 @@
-import { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./GameBoard.css";
 import Modal from "./../../components/Modal/Modal";
 import GameBoardHeader from "../../components/GameBoardHeader/GameBoardHeader";
 import Keyboard from "../../components/Keyboard/Keyboard";
 import Context from "../../store/Context";
 import { InitialGameBoard } from "../../store/Context";
+import { response } from "../../store/Context";
 
 const GameBoard = () => {
-  const { pressedKeys } = useContext(Context);
+  const { pressedKeys, enteredPlayerName } = useContext(Context);
   const [gameBoard, setGameBoard] = useState(InitialGameBoard);
-
   const dialog = useRef();
+  const [isCorrect, setIsCorrect] = useState("default");
+
+  const okResponse = gameBoard.flat().join("") === response.join("");
+
+  useEffect(() => {
+    if (
+      gameBoard.every((row) => row.every((cell) => cell !== null)) &&
+      !okResponse
+    ) {
+      handleModalOpen();
+      setIsCorrect("notOk");
+    } else if (okResponse) {
+      handleModalOpen();
+      setIsCorrect("ok");
+    }
+  }, [gameBoard, isCorrect]);
 
   function handleModalOpen() {
     dialog.current.open();
@@ -38,7 +54,11 @@ const GameBoard = () => {
 
   return (
     <>
-      <Modal ref={dialog} />
+      <Modal
+        ref={dialog}
+        ok={isCorrect}
+        enteredPlayerName={enteredPlayerName}
+      />
       <div className="GameBoard">
         <GameBoardHeader openModal={handleModalOpen} />
 
@@ -48,9 +68,9 @@ const GameBoard = () => {
               {gameBoard.map((row, rowIndex) => (
                 <li key={rowIndex}>
                   <ol>
-                    {row.map((pressedKeys, colIndex) => (
+                    {row.map((pressedKey, colIndex) => (
                       <li key={colIndex}>
-                        <div>{pressedKeys}</div>
+                        <div>{pressedKey}</div>
                       </li>
                     ))}
                   </ol>
