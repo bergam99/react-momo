@@ -2,6 +2,8 @@ import { forwardRef, useContext, useImperativeHandle, useRef } from "react";
 import { createPortal } from "react-dom";
 import Context from "../../store/Context";
 import Img from "../../assets/img/aide.png";
+import { response } from "../../store/Context";
+
 const Modal = forwardRef(function Modal({ ok }, ref) {
   const { enteredPlayerName, setEnteredPlayerName } = useContext(Context);
   const dialog = useRef();
@@ -11,6 +13,9 @@ const Modal = forwardRef(function Modal({ ok }, ref) {
       open() {
         dialog.current.showModal();
       },
+      // close() {
+      //   dialog.current.close();
+      // },
     };
   });
 
@@ -42,7 +47,13 @@ const Modal = forwardRef(function Modal({ ok }, ref) {
       {ok === "ok" && (
         <div>
           <h2>FÉLICITATIONS {enteredPlayerName} !</h2> <br />
-          <p>Le mot était bien PREMICES. Tu l'as découvert en {} coups!</p>
+          <p>
+            Le mot était bien &nbsp;
+            {response.map((letter, index) => (
+              <span key={index}>{letter}</span>
+            ))}
+            . Tu l'as découvert en {} coups!
+          </p>
         </div>
       )}
       {ok === "notOk" && (

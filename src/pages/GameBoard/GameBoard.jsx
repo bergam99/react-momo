@@ -13,18 +13,18 @@ const GameBoard = () => {
   const dialog = useRef();
   const [isCorrect, setIsCorrect] = useState("default");
 
-  const okResponse = gameBoard.flat().join("") === response.join("");
-
   useEffect(() => {
+    const okResponse = gameBoard.flat().join("") === response.join("");
+
     if (
       gameBoard.every((row) => row.every((cell) => cell !== null)) &&
       !okResponse
     ) {
-      handleModalOpen();
       setIsCorrect("notOk");
-    } else if (okResponse) {
       handleModalOpen();
+    } else if (okResponse) {
       setIsCorrect("ok");
+      handleModalOpen();
     }
   }, [gameBoard, isCorrect]);
 
@@ -69,7 +69,17 @@ const GameBoard = () => {
                 <li key={rowIndex}>
                   <ol>
                     {row.map((pressedKey, colIndex) => (
-                      <li key={colIndex}>
+                      <li
+                        key={colIndex}
+                        className={(() => {
+                          if (pressedKey === response[colIndex]) {
+                            return "GameBoard__correct-position";
+                          } else if (response.includes(pressedKey)) {
+                            return "GameBoard__correct-wrong-position";
+                          }
+                          return "GameBoard__default";
+                        })()}
+                      >
                         <div>{pressedKey}</div>
                       </li>
                     ))}
