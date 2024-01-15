@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import Context from "../../store/Context";
 
-const Keyboard = ({ onKeyPress }) => {
-  const { setPressedKeys, gameBoard, setGameBoard } = useContext(Context);
+const Keyboard = ({ onKeyPress, rowIndex, colIndex }) => {
+  const { setPressedKeys } = useContext(Context);
 
   const keyboardLayout = [
     ["A", "Z", "E", "R", "T", "Y", "U", "I", "O", "P"],
@@ -17,16 +17,6 @@ const Keyboard = ({ onKeyPress }) => {
 
   return (
     <>
-      {/* <div>
-        {gameBoard.map((row, rowIndex) => (
-          <div key={rowIndex}>
-            {row.map((cell, cellIndex) => (
-              <span key={cellIndex}>{cell || "-"}</span>
-            ))}
-          </div>
-        ))}
-      </div> */}
-
       <div>
         {keyboardLayout.map((row, rowIndex) => (
           <div key={rowIndex}>

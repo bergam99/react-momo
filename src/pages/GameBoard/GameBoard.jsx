@@ -4,19 +4,11 @@ import Modal from "./../../components/Modal/Modal";
 import GameBoardHeader from "../../components/GameBoardHeader/GameBoardHeader";
 import Keyboard from "../../components/Keyboard/Keyboard";
 import Context from "../../store/Context";
-
-const InitialGameBoard = [
-  [null, null, null, null, null, null, null, null],
-  [null, null, null, null, null, null, null, null],
-  [null, null, null, null, null, null, null, null],
-  [null, null, null, null, null, null, null, null],
-  [null, null, null, null, null, null, null, null],
-  [null, null, null, null, null, null, null, null],
-];
+import { InitialGameBoard } from "../../store/Context";
 
 const GameBoard = () => {
   const { pressedKeys } = useContext(Context);
-  const [gameBoard, setGameBoard] = useState([InitialGameBoard]);
+  const [gameBoard, setGameBoard] = useState(InitialGameBoard);
 
   const dialog = useRef();
 
@@ -25,8 +17,24 @@ const GameBoard = () => {
   }
 
   function handleKeyPress(key) {
+    setGameBoard((prevGameBoard) => {
+      const rowIndex = prevGameBoard.findIndex((innerArray) =>
+        innerArray.includes(null)
+      );
+
+      if (rowIndex !== -1) {
+        const updatedGameBoard = [...prevGameBoard];
+        const columnIndex = updatedGameBoard[rowIndex].indexOf(null);
+        updatedGameBoard[rowIndex][columnIndex] = key;
+        return updatedGameBoard;
+      }
+
+      return prevGameBoard;
+    });
     console.log(key);
   }
+
+  console.log(gameBoard);
 
   return (
     <>
@@ -35,7 +43,21 @@ const GameBoard = () => {
         <GameBoardHeader openModal={handleModalOpen} />
 
         <main className="GameBoard__Main">
-          {pressedKeys}
+          <div>
+            <ol className="GameBoard__Display">
+              {gameBoard.map((row, rowIndex) => (
+                <li key={rowIndex}>
+                  <ol>
+                    {row.map((pressedKeys, colIndex) => (
+                      <li key={colIndex}>
+                        <div>{pressedKeys}</div>
+                      </li>
+                    ))}
+                  </ol>
+                </li>
+              ))}
+            </ol>
+          </div>
           <Keyboard onKeyPress={handleKeyPress} />
         </main>
       </div>

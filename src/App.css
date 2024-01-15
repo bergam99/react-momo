@@ -8,6 +8,11 @@
 img{
       display: block;
 }
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
 .logo {
   height: 6em;
@@ -37,13 +42,6 @@ img{
   }
 }
 
-/* normaliz */
-
-
-/* 
-img {
-  display: block;
-} */
 
 a {
   color: inherit;
